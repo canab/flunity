@@ -1,0 +1,17 @@
+//-- This is generated content, don't modify this file!
+
+#using
+
+namespace #namespace
+{
+	public class #className : ContentBundle
+	{
+#resources
+
+		public static readonly #className instance = new #className();
+
+		private #className() {}
+	}
+
+#classes
+}

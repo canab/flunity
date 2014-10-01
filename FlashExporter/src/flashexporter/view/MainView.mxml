@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<s:Group
+		xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:mx="library://ns.adobe.com/flex/mx"
+		xmlns:view="flashexporter.view.*"
+		width="100%" height="100%"
+		fontFamily="Tahoma"
+		creationComplete="onCreationComplete()"
+		>
+
+	<fx:Script>
+		<![CDATA[
+		import actionlib.common.logging.Logger;
+		import actionlib.common.logging.adapters.TextFieldLogAdapter;
+		import actionlib.common.ui.KeyboardManager;
+
+		import flashexporter.ToolApplication;
+		import flashexporter.data.AppData;
+
+		private function onCreationComplete():void
+		{
+			KeyboardManager.pressEvent.addListener(onKeyDown);
+			initLogging();
+			refresh();
+		}
+
+		private function onKeyDown():void
+		{
+			currentView.onKeyDown();
+		}
+
+		private function initLogging():void
+		{
+			var field:TextField = TextField(logText.mx_internal::getTextField());
+			var adapter:TextFieldLogAdapter = new TextFieldLogAdapter(field);
+			adapter.setColors(0x404040, 0x0080ff);
+			Logger.defaultAdapter = adapter;
+			app.logger.adapter = Logger.defaultAdapter;
+		}
+
+		public function clearLog():void
+		{
+			logText.text = "";
+			logText.validateNow();
+		}
+
+		public function refreshLog():void
+		{
+			logText.invalidateDisplayList();
+		}
+
+		private function refresh():void
+		{
+			var dirSelected:Boolean = appData.projectDir != null;
+			var dirExists:Boolean = dirSelected
+					&& appData.projectDir.exists
+					&& appData.projectDir.isDirectory;
+
+			projectButton.label = appData.projectDir
+					? appData.projectDir.nativePath
+					: "Select Project..";
+
+			currentView.enabled = dirExists;
+
+			if (dirExists)
+				currentView.reload();
+		}
+
+		public function get app():ToolApplication
+		{
+			return ToolApplication.instance;
+		}
+
+		public function get appData():AppData
+		{
+			return ToolApplication.instance.appData;
+		}
+
+		private function selectProject():void
+		{
+			var file:File = appData.projectDir
+					? appData.projectDir.parent || new File()
+					: new File();
+
+			file.addEventListener(Event.SELECT, function (e:Event):void
+			{
+				appData.projectDir = file;
+				app.saveUserSettings();
+				refresh();
+			});
+
+			file.browseForDirectory("Please select project root...");
+		}
+		]]>
+	</fx:Script>
+
+	<s:VGroup
+			paddingTop="8"
+			gap="-1"
+			width="100%"
+			height="100%">
+
+		<s:HGroup paddingLeft="8" width="100%" paddingRight="8">
+			<s:Button id="projectButton"
+			          width="100%"
+			          enabled="{currentView.actionEnabled}"
+			          fontFamily="Courier"
+			          click="selectProject()"/>
+
+			<s:Button id="refreshButton"
+			          label="Refresh"
+			          enabled="{currentView.actionEnabled}"
+			          click="refresh()"/>
+		</s:HGroup>
+
+		<view:ResourcesView
+				id="currentView"
+				width="100%"
+				height="100%"/>
+
+		<s:VGroup id="logPanel"
+		          width="100%"
+		          height="100%">
+			<mx:TextArea
+					id="logText"
+					editable="false"
+					contentBackgroundAlpha="0.75"
+					width="100%" height="100%"
+					verticalScrollPolicy="on"
+					/>
+		</s:VGroup>
+
+	</s:VGroup>
+
+</s:Group>

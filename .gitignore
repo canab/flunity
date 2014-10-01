@@ -1,0 +1,51 @@
+# =============== #
+# Unity generated #
+# =============== #
+Temp/
+bin/
+obj/
+Library/
+
+# =============== #
+# Temp Files      #
+# =============== #
+
+/Distrib*
+/Docs/html
+RECOVER_*.fla
+.ant_targets
+ 
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+ExportedObj/
+*.svd
+*.userprefs
+/SampleProject/**/*.csproj
+*.pidb
+*.suo
+*.sln
+*.user
+*.unityproj
+*.booproj
+ 
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ============ #
+# IntellijIdea #
+# ============ #
+.idea
+
+# ============ #
+# Eclipse #
+# ============ #
+.settings

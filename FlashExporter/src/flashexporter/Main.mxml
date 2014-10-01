@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication
+		xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		showStatusBar="false"
+		invoke="onInvoke()"
+	>
+	
+	<fx:Script>
+		<![CDATA[
+		import spark.components.Application;
+
+		private function onInvoke():void
+		{
+			ToolApplication.createInstance(this);
+			title = "Flash Exporter (v" + getAppVersion() + ")";
+		}
+
+		private function getAppVersion():String
+		{
+		    var appXml:XML = NativeApplication.nativeApplication.applicationDescriptor;
+		    var ns:Namespace = appXml.namespace();
+		    var appVersion:String = appXml.ns::versionNumber[0];
+		    return appVersion;
+		}
+		]]>
+	</fx:Script>
+
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+
+		s|HGroup, s|VGroup
+		{
+			color: #DDDDDD;
+		}
+		mx|TextArea
+		{
+			fontFamily: "Courier New"
+		}
+		s|List, s|Button, s|TextInput, s|TabBar, mx|ComboBox
+		{
+			color: #000000;
+		}
+		s|List, mx|ComboBox
+		{
+			fontFamily: "Courier New";
+		}
+		s|WindowedApplication
+		{
+			backgroundColor: #778899;
+		}
+	</fx:Style>
+
+
+</s:WindowedApplication>

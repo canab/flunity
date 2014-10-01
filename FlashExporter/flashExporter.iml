@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="Flex" version="4">
+  <component name="FlexBuildConfigurationManager" active="main">
+    <configurations>
+      <configuration name="main" target-platform="Desktop" main-class="flashexporter.Main" output-file="FlashExporter.swf" output-folder="$MODULE_DIR$/bin">
+        <dependencies target-player="10.0">
+          <entries>
+            <entry library-id="b48dd9e3-c55f-40df-8591-2d8d3655ab43">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-id="e091539c-1514-4a1c-9613-aa204be62052">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="flex_sdk_4.6" />
+        </dependencies>
+        <compiler-options>
+          <option name="resourceFilesMode" value="ResourcePatterns" />
+        </compiler-options>
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/air-descriptor.xml" package-file-name="FlashExporter" />
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
+    </configurations>
+    <compiler-options />
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/templates" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="flex_sdk_4.6" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="b48dd9e3-c55f-40df-8591-2d8d3655ab43" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/blooddy_crypto.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="e091539c-1514-4a1c-9613-aa204be62052" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/action-lib.swc!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
+

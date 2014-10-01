@@ -1,0 +1,12 @@
+	public class #className : #baseClass
+	{#fields
+		protected override DisplayObject[] ConstructInstances()
+		{
+			var instances = new DisplayObject[#numChildren];
+#construct
+			return instances;
+		}
+
+		public #className() : base(#resource) {}
+		public #className(DisplayContainer parent) : this() { this.parent = parent; }
+	}

@@ -1,0 +1,1 @@
+ZXPSignCmd -selfSignedCert UA Lviv Nravo Canab 123 cert.p12
