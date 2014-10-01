@@ -1,0 +1,8 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$interface_flunity_1_1_internal_1_1_i_resource.html" title="Base interface for all resources " alt="" coords="5,41,179,68"/>
+<area shape="rect" id="node2" href="$interface_flunity_1_1_internal_1_1_i_display_resource.html" title="Interface for resources that can instantiate DisplayObject " alt="" coords="247,5,407,46"/>
+<area shape="rect" id="node6" href="$class_flunity_1_1_internal_1_1_resource_base.html" title="Base class for resources " alt="" coords="227,71,427,97"/>
+<area shape="rect" id="node3" href="$class_flunity_1_1_movie_clip_resource.html" title="Holds data exported from flash as MovieClip. " alt="" coords="475,15,655,41"/>
+<area shape="rect" id="node4" href="$class_flunity_1_1_sprite_resource.html" title="Holds data exported from flash as BitmapSprite. " alt="" coords="487,69,644,96"/>
+<area shape="rect" id="node5" href="$class_flunity_1_1_font_resource.html" title="Represent font symbols data exported from flash. " alt="" coords="704,69,853,96"/>
+</map>

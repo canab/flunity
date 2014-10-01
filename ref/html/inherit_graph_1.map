@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$class_flunity_1_1_common_1_1_event_sender_base_3_01_delegate_type_01_4.html" title="Base class for events subscribing/dispatching. " alt="" coords="5,49,205,90"/>
+<area shape="rect" id="node2" href="$class_flunity_1_1_common_1_1_event_sender.html" title="EventSender for actions without arguments. " alt="" coords="269,5,469,32"/>
+<area shape="rect" id="node3" href="$class_flunity_1_1_common_1_1_event_sender_3_01_t_01_4.html" title="EventSender for actions with one argument. " alt="" coords="254,56,485,83"/>
+<area shape="rect" id="node4" href="$class_flunity_1_1_common_1_1_event_sender_3_01_t1_00_01_t2_01_4.html" title="EventSender for actions with two arguments. " alt="" coords="269,107,469,149"/>
+</map>

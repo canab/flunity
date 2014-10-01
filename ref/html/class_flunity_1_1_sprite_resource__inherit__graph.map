@@ -1,0 +1,6 @@
+<map id="Flunity.SpriteResource" name="Flunity.SpriteResource">
+<area shape="rect" id="node5" href="$class_flunity_1_1_font_resource.html" title="Represent font symbols data exported from flash. " alt="" coords="56,229,205,256"/>
+<area shape="rect" id="node2" href="$class_flunity_1_1_internal_1_1_resource_base.html" title="Base class for resources " alt="" coords="5,80,115,107"/>
+<area shape="rect" id="node3" href="$interface_flunity_1_1_internal_1_1_i_resource.html" title="Base interface for all resources " alt="" coords="89,5,172,32"/>
+<area shape="rect" id="node4" href="$interface_flunity_1_1_internal_1_1_i_display_resource.html" title="Interface for resources that can instantiate DisplayObject " alt="" coords="139,80,265,107"/>
+</map>

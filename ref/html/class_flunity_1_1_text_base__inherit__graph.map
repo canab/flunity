@@ -1,0 +1,8 @@
+<map id="Flunity.TextBase" name="Flunity.TextBase">
+<area shape="rect" id="node6" href="$class_flunity_1_1_text_field.html" title="DisplayObject to render multiline text " alt="" coords="57,229,177,256"/>
+<area shape="rect" id="node7" href="$class_flunity_1_1_text_label.html" title="DisplayObject to render single&#45;line text " alt="" coords="202,229,325,256"/>
+<area shape="rect" id="node2" href="$class_flunity_1_1_display_object.html" title="Base class for renderable objects " alt="" coords="139,80,243,107"/>
+<area shape="rect" id="node3" href="$interface_flunity_1_1_internal_1_1_i_frame_animable.html" title="All objects which implements IFrameAnimable can be animated. See FrameAnimationExt. " alt="" coords="5,5,125,32"/>
+<area shape="rect" id="node4" href="$interface_flunity_1_1_common_1_1_i_reusable.html" title="Allows to objects which can be manipulated by somebody specify that they have been reused (from Objec..." alt="" coords="149,5,232,32"/>
+<area shape="rect" id="node5" href="$interface_flunity_1_1_common_1_1_i_active_object.html" title="Allows to objects which can be manipulated by somebody specify that they are in inactive state and al..." alt="" coords="257,5,356,32"/>
+</map>

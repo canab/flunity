@@ -1,0 +1,6 @@
+<map id="Flunity.Internal.IDisplayResource" name="Flunity.Internal.IDisplayResource">
+<area shape="rect" id="node3" href="$class_flunity_1_1_movie_clip_resource.html" title="Holds data exported from flash as MovieClip. " alt="" coords="5,171,184,197"/>
+<area shape="rect" id="node4" href="$class_flunity_1_1_sprite_resource.html" title="Holds data exported from flash as BitmapSprite. " alt="" coords="209,171,367,197"/>
+<area shape="rect" id="node2" href="$interface_flunity_1_1_internal_1_1_i_resource.html" title="Base interface for all resources " alt="" coords="149,5,232,32"/>
+<area shape="rect" id="node5" href="$class_flunity_1_1_font_resource.html" title="Represent font symbols data exported from flash. " alt="" coords="213,245,363,272"/>
+</map>

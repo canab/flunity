@@ -1,0 +1,12 @@
+<map id="Flunity.Common.IReusable" name="Flunity.Common.IReusable">
+<area shape="rect" id="node2" href="$class_flunity_1_1_display_object.html" title="Base class for renderable objects " alt="" coords="237,132,384,159"/>
+<area shape="rect" id="node3" href="$class_flunity_1_1_display_container.html" title="Container for DisplayObjects. All children inherit matrix and color transformation from parent contai..." alt="" coords="433,31,599,57"/>
+<area shape="rect" id="node6" href="$class_flunity_1_1_empty_object.html" title="Invisible display object. Purpose is to implement some kinds of placeholders. " alt="" coords="445,81,587,108"/>
+<area shape="rect" id="node7" href="$class_flunity_1_1_flash_sprite.html" title="Bitmap sprite. Has one or more bitmap frames. " alt="" coords="450,132,582,159"/>
+<area shape="rect" id="node8" href="$class_flunity_1_1_text_base.html" title="Base class for text rendering. See TextField, TextLabel " alt="" coords="455,183,577,209"/>
+<area shape="rect" id="node11" href="$class_flunity_1_1_touch_rect.html" title="Invisible display object wich can handle touches. Change size and position to set touch area..." alt="" coords="451,233,581,260"/>
+<area shape="rect" id="node4" title="Root container for FlashStage " alt="" coords="649,5,834,32"/>
+<area shape="rect" id="node5" href="$class_flunity_1_1_movie_clip.html" title="Container that represents animated timeline created in Adobe Flash " alt="" coords="679,56,803,83"/>
+<area shape="rect" id="node9" href="$class_flunity_1_1_text_field.html" title="DisplayObject to render multiline text " alt="" coords="681,157,801,184"/>
+<area shape="rect" id="node10" href="$class_flunity_1_1_text_label.html" title="DisplayObject to render single&#45;line text " alt="" coords="679,208,803,235"/>
+</map>
