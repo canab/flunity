@@ -35,4 +35,4 @@ It contains **SampleProject** which is ready to run in unity.
 - [Quick Programming Guide](https://github.com/nravo/flunity/wiki/Quick-Programming-Guide)
 - [Working with Resources](https://github.com/nravo/flunity/wiki/Working-with-Resources)
 - [Scene Setup In Unity](https://github.com/nravo/flunity/wiki/Scene-Setup-In-Unity)
-- [API Documentation](http://nravo.github.io/flunity/api-docs/namespace_flunity.html)
+- [API Documentation](http://nravo.github.io/flunity/ref/html/namespace_flunity.html)
