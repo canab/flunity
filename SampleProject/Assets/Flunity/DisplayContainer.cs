@@ -388,6 +388,27 @@ namespace Flunity
 			return result;
 		}
 
+		public DisplayObject GetNestedChild(Predicate<DisplayObject> filter = null)
+		{
+			return GetNestedChild<DisplayObject>(filter);
+		}
+
+		public T GetNestedChild<T>(Predicate<T> filter = null) where T : DisplayObject
+		{
+			var iterator = GetTreeIterator();
+
+			while (iterator.MoveNext())
+			{
+				var child = iterator.Current as T;
+				if (child == null)
+					continue;
+
+				if (filter == null || filter(child))
+					return child;
+			}
+			return null;
+		}
+
 		public T GetChild<T>() where T : DisplayObject
 		{
 			var type = typeof(T);
