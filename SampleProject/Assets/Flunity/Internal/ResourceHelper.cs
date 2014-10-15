@@ -69,11 +69,6 @@ namespace Flunity.Internal
 			}
 		}
 
-		public static void WriteXml(string fullPath, XDocument doc)
-		{
-			doc.Save(fullPath);
-		}
-		
 		public static FileStream GetWriteStream(string fullPath)
 		{
 			return File.Open(fullPath, FileMode.Create);
