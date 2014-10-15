@@ -49,7 +49,7 @@ namespace Flunity
 			base.LoadResources();
 
 			#if UNITY_EDITOR || UNITY_STANDALONE
-			if (FlashResources.isReloadingEnabled)
+			if (FlashResources.isPlatformReloadingEnabled)
 				AddBundleWatcher();
 			#endif
 		}
@@ -104,7 +104,7 @@ namespace Flunity
 
 		private void TryReadTexture()
 		{
-			if (FlashResources.isReloadingEnabled)
+			if (FlashResources.isPlatformReloadingEnabled)
 			{
 				// File.ReadAllBytes is not available on WindowsPhone
 				#if UNITY_EDITOR || UNITY_STANDALONE

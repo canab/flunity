@@ -35,7 +35,7 @@ namespace Flunity.Internal
 
 		public static XDocument TryReadXml(string fullPath)
 		{
-			if (FlashResources.isReloadingEnabled)
+			if (FlashResources.isPlatformReloadingEnabled)
 			{
 				if (!fullPath.EndsWith(".xml", StringComparison.Ordinal))
 					fullPath = fullPath + ".xml";

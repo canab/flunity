@@ -173,7 +173,7 @@ namespace Flunity
 		{
 			isDrawPhase = false;
 
-			if (FlashResources.isReloadingEnabled)
+			if (FlashResources.isPlatformReloadingEnabled)
 				FlashResources.reloadPendingResources();
 
 			if (_shaderDirty)

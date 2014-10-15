@@ -38,14 +38,24 @@ namespace Flunity
 		public static string bundlesRoot = "FlashBundles";
 
 		internal static readonly ActionsInvoker reloadingInvoker = new ActionsInvoker();
-		internal static bool isReloadingEnabled = 
-            Application.platform == RuntimePlatform.OSXEditor ||
-		    Application.platform == RuntimePlatform.WindowsEditor;
+		internal static bool isReloadingEnabled = false;
 		internal static bool isReloadingPerformed = false;
 
 		private static readonly List<ResourceBundle> _currentBundles = new List<ResourceBundle>();
 		private static readonly ReadOnlyCollection<ResourceBundle> _currentBundlesView
 			= new ReadOnlyCollection<ResourceBundle>(_currentBundles);
+
+		internal static bool isPlatformReloadingEnabled
+		{
+			get
+			{
+				#if UNITY_EDITOR || UNITY_STANDALONE
+				return isReloadingEnabled;
+				#else
+				return false;
+				#endif
+			}
+		}
 
 		internal static void reloadPendingResources()
 		{
