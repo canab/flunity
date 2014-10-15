@@ -18,8 +18,7 @@ namespace Flunity
 	{
 		private Dictionary<string, XElement> _descriptions;
 		private Texture2D _texture;
-		private FileSystemWatcher _watcher;
-		
+
 		public ContentBundle() : base("")
 		{
 			name = GetType().Name;
@@ -49,8 +48,10 @@ namespace Flunity
 
 			base.LoadResources();
 
+			#if UNITY_EDITOR || UNITY_STANDALONE
 			if (FlashResources.isReloadingEnabled)
 				AddBundleWatcher();
+			#endif
 		}
 
 		protected override void UnloadResources()
@@ -64,8 +65,10 @@ namespace Flunity
 				_texture = null;
 			}
 
+			#if UNITY_EDITOR || UNITY_STANDALONE
 			if (_watcher != null)
 				RemoveBundleWatcher();
+			#endif
 		}
 
 
@@ -103,6 +106,8 @@ namespace Flunity
 		{
 			if (FlashResources.isReloadingEnabled)
 			{
+				// File.ReadAllBytes is not available on WindowsPhone
+				#if UNITY_EDITOR || UNITY_STANDALONE
 				var localPath = PathUtil.Combine("Assets", "Resources", GetTextureFilePath() + ".png.bytes");
 				var filePath = Path.GetFullPath(localPath);
 
@@ -116,6 +121,7 @@ namespace Flunity
 				{
 					_texture = null;
 				}
+				#endif
 			}
 			else
 			{
@@ -185,7 +191,9 @@ namespace Flunity
 		}
 
 		#region reloading
-
+		#if UNITY_EDITOR || UNITY_STANDALONE
+		private FileSystemWatcher _watcher;
+		
 		void AddBundleWatcher()
 		{
 			var path = PathUtil.Combine("Assets", "Resources", FlashResources.bundlesRoot, name);
@@ -226,6 +234,7 @@ namespace Flunity
 			AddBundleWatcher();
 		}
 
+		#endif
 		#endregion
 	}
 }
