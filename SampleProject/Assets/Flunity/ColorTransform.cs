@@ -158,7 +158,7 @@ namespace Flunity
 		internal void GetTint(out Vector2 holder)
 		{
 			holder.x = rOffset + 1 + (int)(gOffset * 255);
-			holder.y = bOffset + 1 + (int)(bOffset * 255);
+			holder.y = bOffset + 1 + (int)(aOffset * 255);
 		}
 
 		public void GetTint(out Color32 color)
