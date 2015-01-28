@@ -188,5 +188,11 @@ namespace Flunity
 
 		#endregion
 
+		public override string ToString ()
+		{
+			var resourcePath = _resource != null ? _resource.path : "";
+			return string.Format("[{0}: resource=\"{1}\"]", GetType().Name, resourcePath);
+		}
+
 	}
 }
