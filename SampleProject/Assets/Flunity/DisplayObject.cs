@@ -154,12 +154,14 @@ namespace Flunity
 			drawOrder = 0;
 			CheckUpdateSubscribtion(stage);
 			AddedToStage.Dispatch(this);
+			stage.events.DispatchObjectAdded(this);
 		}
 
 		internal virtual void InternalRemovedFromStage(FlashStage stage)
 		{
 			CheckUpdateSubscribtion(stage);
 			RemovedFromStage.Dispatch(this);
+			stage.events.DispatchObjectRemoved(this);
 		}
 
 		internal void InternalSetParent(DisplayContainer value)

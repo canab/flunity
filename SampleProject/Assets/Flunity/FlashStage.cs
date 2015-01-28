@@ -40,6 +40,17 @@ namespace Flunity
 		internal DrawBatch sceneBatch;
 		internal bool isDrawPhase;
 
+		#region events
+
+		private readonly FlashStageEvents _events = new FlashStageEvents();
+
+		public FlashStageEvents events
+		{
+			get { return _events; }
+		}
+
+		#endregion
+
 		#region shader
 
 		[SerializeField]

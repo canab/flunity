@@ -188,6 +188,14 @@ namespace Flunity
 				if (_frameActions.TryGetValue(currentFrame, out frameAction))
 					frameAction.Invoke();
 			}
+
+			var labels = CurrentLabels();
+
+			for (int i = 0; i < labels.Length; i++)
+			{
+				if (stage != null)
+					stage.events.DispatchFrameLabelEntered(this, labels[i]);
+			}
 		}
 
 		private void UpdateInstances()

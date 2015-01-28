@@ -8,7 +8,7 @@ namespace Examples
 		protected override void CreateScene ()
 		{
 			var demo = new McDemo_Animation(stage.root);
-			demo.Play();
+			demo.GetChildren<MovieClip>().ForEach(it => it.Play());
 		}
 	}
 }
