@@ -160,9 +160,11 @@ namespace Flunity
 		/// </summary>
 		public void SetLabelAction(string labelName, Action action)
 		{
-			var frameNum = GetFrameNum(labelName);
-			if (frameNum >= 0)
-				SetFrameAction(frameNum, action);
+			for (int i = 0; i < totalFrames; i++)
+			{
+				if (_timeLine.frames[i].labels.Contains(labelName))
+					SetFrameAction(i, action);
+			}
 		}
 
 		/// <summary>
