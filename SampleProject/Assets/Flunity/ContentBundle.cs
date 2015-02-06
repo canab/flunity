@@ -47,7 +47,7 @@ namespace Flunity
 
 			base.LoadResources();
 
-			#if UNITY_EDITOR || UNITY_STANDALONE
+			#if (UNITY_EDITOR || UNITY_STANDALONE) && !UNITY_WEBPLAYER
 			if (FlashResources.isPlatformReloadingEnabled)
 				AddBundleWatcher();
 			#endif
@@ -64,7 +64,7 @@ namespace Flunity
 				_texture = null;
 			}
 
-			#if UNITY_EDITOR || UNITY_STANDALONE
+			#if (UNITY_EDITOR || UNITY_STANDALONE) && !UNITY_WEBPLAYER
 			if (_watcher != null)
 				RemoveBundleWatcher();
 			#endif
@@ -98,7 +98,6 @@ namespace Flunity
 				var lines = element.Split('\n');
 				var resourcePath = lines[0];
 				_descriptions[resourcePath] = lines;
-				UnityEngine.Debug.Log(resourcePath);
 			}
 		}
 
@@ -107,7 +106,7 @@ namespace Flunity
 			if (FlashResources.isPlatformReloadingEnabled)
 			{
 				// File.ReadAllBytes is not available on WindowsPhone
-				#if UNITY_EDITOR || UNITY_STANDALONE
+				#if (UNITY_EDITOR || UNITY_STANDALONE) && !UNITY_WEBPLAYER
 				var localPath = PathUtil.Combine("Assets", "Resources", GetTextureFilePath() + ".png.bytes");
 				var filePath = Path.GetFullPath(localPath);
 
@@ -176,7 +175,7 @@ namespace Flunity
 		}
 
 		#region reloading
-		#if UNITY_EDITOR || UNITY_STANDALONE
+		#if (UNITY_EDITOR || UNITY_STANDALONE) && !UNITY_WEBPLAYER
 		private FileSystemWatcher _watcher;
 		
 		void AddBundleWatcher()

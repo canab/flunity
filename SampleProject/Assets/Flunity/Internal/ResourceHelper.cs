@@ -34,6 +34,7 @@ namespace Flunity.Internal
 
 		public static string TryReadText(string fullPath)
 		{
+			#if (UNITY_EDITOR || UNITY_STANDALONE) && !UNITY_WEBPLAYER
 			if (FlashResources.isPlatformReloadingEnabled)
 			{
 				if (!fullPath.EndsWith(".txt", StringComparison.Ordinal))
@@ -46,6 +47,7 @@ namespace Flunity.Internal
 					: null;
 			}
 			else
+			#endif
 			{
 				if (fullPath.EndsWith(".txt", StringComparison.Ordinal))
 					fullPath = fullPath.Substring(0, fullPath.Length - 4);
