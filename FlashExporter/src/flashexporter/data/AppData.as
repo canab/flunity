@@ -11,14 +11,14 @@ package flashexporter.data
 
 	public class AppData extends AppContext
 	{
-		public static function getDescription(symbols:Object):XML
+		public static function getDescription(symbols:Object):String
 		{
-			var xml:XML = <resources/>;
+			var result:Array = [];
 			for each (var symbol:Symbol in symbols)
 			{
-				xml.appendChild(symbol.getDescription());
+				result.push(symbol.getDescription());
 			}
-			return xml;
+			return result.join("\n---\n");
 		}
 
 		public var fileChangedEvent:EventSender = new EventSender(this);

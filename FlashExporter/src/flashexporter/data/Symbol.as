@@ -45,7 +45,7 @@ package flashexporter.data
 		public var generatedResource:String = "";
 
 		public var isProcessed:Boolean = false;
-		public var description:XML;
+		public var description:String;
 		public var frames:Vector.<SheetFrame>;
 		public var children:Vector.<Symbol>;
 
@@ -159,22 +159,25 @@ package flashexporter.data
 			return _hints.indexOf(hint) > 0;
 		}
 
-		public function getDescription():XML
+		public function getDescription():String
 		{
-			var result:XML = description.copy();
-			result.@path = resourcePath;
+			var result:Array = [resourcePath];
+
+			if (isHd)
+				result.push("hd:");
+
+			if (description && description.length > 0)
+				result.push(description);
 
 			if (frames)
 			{
-				result.@hd = isHd;
-
 				for each (var frame:SheetFrame in frames)
 				{
-					result.appendChild(frame.toXml());
+					result.push(frame.serialize());
 				}
 			}
 
-			return result;
+			return result.join("\n");
 		}
 
 		public function get isSprite():Boolean

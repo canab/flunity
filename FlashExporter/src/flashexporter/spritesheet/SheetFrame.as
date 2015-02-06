@@ -8,9 +8,9 @@ package flashexporter.spritesheet
 
 	public class SheetFrame extends LinkedListNode
 	{
-		private static function getFrameDescription(x:int, y:int, width:int, height:int, anchorX:int, anchorY:int):XML
+		private static function getFrameDescription(x:int, y:int, width:int, height:int, anchorX:int, anchorY:int):String
 		{
-			return <frame x={x} y={y} w={width} h={height} ax={anchorX} ay={anchorY}/>;
+			return "f:" + [x, y, width, height, anchorX, anchorY].join(",");
 		}
 
 		public var bitmap:BitmapData;
@@ -30,7 +30,7 @@ package flashexporter.spritesheet
 			}
 		}
 
-		public function toXml():XML
+		public function serialize():String
 		{
 			return (isEmpty)
 				? getFrameDescription(0, 0, 0, 0, 0, 0)

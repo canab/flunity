@@ -84,7 +84,7 @@ package flashexporter.processing
 			if (timelineSymbols.length > 0)
 			{
 				app.logger.debug("writing timeline...");
-				var description:XML = AppData.getDescription(timelineSymbols);
+				var description:String = AppData.getDescription(timelineSymbols);
 				var file:File = app.outputDir
 						.resolvePath(_swf.bundleName)
 						.resolvePath("timeline");

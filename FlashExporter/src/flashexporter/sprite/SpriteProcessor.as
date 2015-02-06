@@ -3,14 +3,10 @@ package flashexporter.sprite
 	import actionlib.common.commands.CallLaterCommand;
 	import actionlib.common.display.StageReference;
 	import actionlib.common.query.conditions.nameIs;
-	import actionlib.common.query.conditions.namePrefixIs;
 	import actionlib.common.query.from;
-	import actionlib.common.query.fromDisplay;
 	import actionlib.common.query.fromDisplayTree;
 	import actionlib.common.query.mappers.newObject;
 	import actionlib.common.utils.DisplayUtil;
-	import flashexporter.rendering.BitmapFrame;
-	import flashexporter.rendering.ClipPrerenderer;
 
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -20,9 +16,10 @@ package flashexporter.sprite
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
-	import flashexporter.AppConstants;
 	import flashexporter.abstracts.AsyncAppCommand;
 	import flashexporter.data.Symbol;
+	import flashexporter.rendering.BitmapFrame;
+	import flashexporter.rendering.ClipPrerenderer;
 	import flashexporter.spritesheet.SheetFrame;
 	import flashexporter.spritesheet.SheetUtil;
 
@@ -71,7 +68,7 @@ package flashexporter.sprite
 				removeEmptySpaces();
 
 			_symbol.frames = Vector.<SheetFrame>(from(_frames).select(newObject(SheetFrame)));
-			_symbol.description = getDescription();
+			_symbol.description = "";
 			_symbol.isProcessed = true;
 
 			dispatchComplete();
@@ -86,24 +83,6 @@ package flashexporter.sprite
 			container.name = _symbol.id;
 
 			return container;
-		}
-
-		private function getDescription():XML
-		{
-			var description:XML = <sprite/>;
-
-			for each (var pointClip:DisplayObject in _points)
-			{
-				var container:DisplayObjectContainer = pointClip.parent.parent;
-				StageReference.stage.addChild(container);
-				var point:Point = DisplayUtil.transformCoords(new Point(), pointClip, container);
-				StageReference.stage.removeChild(container);
-
-				var node:XML = <point name={pointClip.name} x={point.x} y={point.y}/>;
-				description.appendChild(node)
-			}
-
-			return description;
 		}
 
 		private function skipFrames():Vector.<BitmapFrame>

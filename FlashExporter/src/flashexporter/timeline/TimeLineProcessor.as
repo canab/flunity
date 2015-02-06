@@ -83,10 +83,7 @@ package flashexporter.timeline
 
 		private function updateSymbol():void
 		{
-			var description:XML = _timeLine.toXML();
-			description.@path = _symbol.resourcePath;
-
-			_symbol.description = description;
+			_symbol.description = _timeLine.serialize();
 			_symbol.children = _timeLine.instances;
 			_symbol.isProcessed = true;
 		}

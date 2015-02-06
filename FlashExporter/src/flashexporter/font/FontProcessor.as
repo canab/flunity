@@ -110,22 +110,20 @@ package flashexporter.font
 			_symbol.isProcessed = true;
 		}
 
-		private function getDescription():XML
+		private function getDescription():String
 		{
 			var charBounds:Rectangle = _field.getCharBoundaries(0);
 			var textFormat:TextFormat = _field.getTextFormat(0);
 
-			var format:XML = <format/>;
-			format.@fontName = ToolApplication.correctFontName(textFormat.font);
-			format.@fontSize = textFormat.size ? int(textFormat.size) : 12;
-			format.@offsetX = int(charBounds.x);
-			format.@offsetY = int(charBounds.y);
-			format.@rowHeight = int(charBounds.height);
-			format.@letterSpacing = int(textFormat.letterSpacing);
+			var result:Array = [];
+			result.push("fontName:" + ToolApplication.correctFontName(textFormat.font));
+			result.push("fontSize:" + (textFormat.size ? int(textFormat.size) : 12));
+			result.push("offsetX:" + int(charBounds.x));
+			result.push("offsetY:" + int(charBounds.y));
+			result.push("rowHeight:" + int(charBounds.height));
+			result.push("letterSpacing:" + int(textFormat.letterSpacing));
 
-			var description:XML = <font/>;
-			description.appendChild(format);
-			return description;
+			return result.join("\n");
 		}
 
 		private function renderChar(ch:String):FontFrame
@@ -146,8 +144,8 @@ package flashexporter.font
 			{
 				frame.bitmap = SheetUtil.createBitmapData(preciseBounds.width, preciseBounds.height);
 				frame.bitmap.copyPixels(bitmap, preciseBounds, new Point());
-				frame.offsetX = preciseBounds.x - (closeBounds.x - redundantBounds.x);
-				frame.offsetY = preciseBounds.y - (closeBounds.y - redundantBounds.y);
+				frame.anchorX = preciseBounds.x - (closeBounds.x - redundantBounds.x);
+				frame.anchorY = preciseBounds.y - (closeBounds.y - redundantBounds.y);
 			}
 
 			return frame;
