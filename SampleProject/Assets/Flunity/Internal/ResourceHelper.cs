@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Xml.Linq;
 using UnityEngine;
 using Flunity.Utils;
 using Flunity;
@@ -23,37 +22,35 @@ namespace Flunity.Internal
 				.Replace('\\', Path.DirectorySeparatorChar);
 		}
 
-		public static XDocument ReadXml(string fullPath)
+		public static string ReadText(string fullPath)
 		{
-			var xml = TryReadXml(fullPath);
+			var result = TryReadText(fullPath);
 
-			if (xml == null)
+			if (result == null)
 				throw new Exception("Resource not found: " + fullPath);
 
-			return xml;
+			return result;
 		}
 
-		public static XDocument TryReadXml(string fullPath)
+		public static string TryReadText(string fullPath)
 		{
 			if (FlashResources.isPlatformReloadingEnabled)
 			{
-				if (!fullPath.EndsWith(".xml", StringComparison.Ordinal))
-					fullPath = fullPath + ".xml";
+				if (!fullPath.EndsWith(".txt", StringComparison.Ordinal))
+					fullPath = fullPath + ".txt";
 
 				var globalPath = Path.GetFullPath(PathUtil.Combine("Assets", "Resources", fullPath));
 
 				return File.Exists(globalPath)
-					? XDocument.Load(globalPath)
+					? File.ReadAllText(globalPath)
 					: null;
 			}
 			else
 			{
-				if (fullPath.EndsWith(".xml", StringComparison.Ordinal))
+				if (fullPath.EndsWith(".txt", StringComparison.Ordinal))
 					fullPath = fullPath.Substring(0, fullPath.Length - 4);
 				var asset = UnityEngine.Resources.Load<TextAsset>(fullPath);
-				return asset != null
-					? XDocument.Load(new StringReader(asset.text))
-					: null;
+				return (asset != null) ? asset.text : null;
 			}
 		}
 

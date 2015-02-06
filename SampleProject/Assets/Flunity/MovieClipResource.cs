@@ -1,8 +1,6 @@
 using System;
-using System.Xml.Linq;
 using Flunity;
 using Flunity.Internal;
-using Flunity.Common;
 
 namespace Flunity
 {
@@ -34,15 +32,13 @@ namespace Flunity
 			_timeLine = MovieClipParser.ReadTimeLine(description);
 		}
 
-		private XElement ReadDescription()
+		private string[] ReadDescription()
 		{
 			var contentBundle = bundle as ContentBundle;
 			if (contentBundle != null)
 				return contentBundle.GetDescription(path);
 			
-			var xmlPath = FlashResources.GetFullPath(path + ".xml");
-			var xml = ResourceHelper.ReadXml(xmlPath);
-			return xml.Root;
+			return ResourceHelper.ReadText(path + ".txt").Split('\n');
 		}
 
 		public override void Unload()

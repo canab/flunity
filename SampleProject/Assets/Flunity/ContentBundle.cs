@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Xml.Linq;
 using UnityEngine;
 using System.IO;
 using Flunity.Common;
@@ -16,7 +15,7 @@ namespace Flunity
 	/// </summary>
 	public class ContentBundle : ResourceBundle
 	{
-		private Dictionary<string, XElement> _descriptions;
+		private Dictionary<string, string[]> _descriptions;
 		private Texture2D _texture;
 
 		public ContentBundle() : base("")
@@ -74,31 +73,32 @@ namespace Flunity
 
 		private void ReadAllDescriptions()
 		{
-			_descriptions = new Dictionary<string, XElement>();
+			_descriptions = new Dictionary<string, string[]>();
 
 			TryReadDescription(GetSheetFilePath());
 			TryReadDescription(GetTimelineFilePath());
 		}		
 
-		private void TryReadDescription(string fileName)
+		private void TryReadDescription(string filePath)
 		{
-			var fullPath = FlashResources.GetFullPath(fileName);
-
 			if (FlashResources.logLevel <= LogLevel.DEBUG)
-				Debug.Log("Reading description: " + fullPath);
+				Debug.Log("Reading description: " + filePath);
 
-			var xml = ResourceHelper.TryReadXml(fullPath);
-			if (xml == null)
+			var text = ResourceHelper.TryReadText(filePath);
+			if (text == null)
 			{
 				if (FlashResources.logLevel <= LogLevel.DEBUG)
 					Debug.Log("Description not found");
 				return;
 			}
 
-			foreach (var node in xml.Root.Elements())
+			var elements = text.Split("\n---\n");
+			foreach (var element in elements)
 			{
-				var resourcePath = node.Attribute("path").Value;
-				_descriptions[resourcePath] = node;
+				var lines = element.Split('\n');
+				var resourcePath = lines[0];
+				_descriptions[resourcePath] = lines;
+				UnityEngine.Debug.Log(resourcePath);
 			}
 		}
 
@@ -132,37 +132,17 @@ namespace Flunity
 					_texture.LoadImage(bytesAsset.bytes);
 				}
 				UnityEngine.Resources.UnloadAsset(bytesAsset);
-
-				//_texture = LoadContent<Texture2D>(GetTextureFilePath());
 			}
 		}
 
-		internal XElement GetDescription(string path)
+		internal string[] GetDescription(string path)
 		{
 			if (_descriptions == null)
 				throw new Exception("Descriptions for bundle is not loaded: " + name);
 
-			XElement description;
+			string[] description;
 			_descriptions.TryGetValue(path, out description);
 			return description;
-		}
-
-		internal TextureInfo GetTexture(string path)
-		{
-			if (_descriptions == null)
-				throw new Exception("Descriptions for bundle is not loaded: " + name);
-
-			if (_texture == null)
-				throw new Exception("Texture for bundle is not loaded: " + name);
-
-			XElement description;
-			if (_descriptions.TryGetValue(path, out description))
-			{
-				var isHd = description.Attribute("hd").Value == "true";
-				return new TextureInfo(_texture, scale: isHd ? 0.5f : 1);
-			}
-
-			throw new Exception("Texture path not found: " + path);
 		}
 
 		private string GetSheetFilePath()
@@ -170,7 +150,7 @@ namespace Flunity
 			var lowPath = PathUtil.Combine(FlashResources.bundlesRoot, name, "texture");
 			var highPath = PathUtil.Combine(FlashResources.bundlesRoot, name, "texture$hd");
 
-			return FlashResources.useHighDefTextures && ResourceHelper.AssetExists(highPath + ".xml")
+			return FlashResources.useHighDefTextures && ResourceHelper.AssetExists(highPath + ".txt")
 				? highPath
 				: lowPath;
 		}
@@ -188,6 +168,11 @@ namespace Flunity
 		private string GetTimelineFilePath()
 		{
 			return PathUtil.Combine(FlashResources.bundlesRoot, name, "timeline");
+		}
+
+		internal Texture2D texture
+		{
+			get { return _texture; }
 		}
 
 		#region reloading

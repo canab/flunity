@@ -3,37 +3,39 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Xml.Linq;
-using Flunity;
 
 namespace Flunity.Internal
 {
 	internal class MovieClipParser
     {
-		public static TimeLine ReadTimeLine(XContainer xml)
-        {
-            var timeLine = new TimeLine();
+		private const int RES_LINE = 1;
+		private const int INST_LINE = 2;
+		private const int FRAME_LINE = 3;
 
-            timeLine.resources = xml.Element("resources").Value.Split(',');
-            timeLine.instances = ReadInstanceInfo(xml);
-            timeLine.frames = ReadFrames(xml, timeLine.instances.Length);
+		public static TimeLine ReadTimeLine(string[] description)
+        {
+			var timeLine = new TimeLine();
+
+			timeLine.resources = description[RES_LINE].Split(',');
+			timeLine.instances = ReadInstanceInfo(description[INST_LINE]);
+			timeLine.frames = ReadFrames(description, timeLine.instances.Length);
 
             return timeLine;
         }
 
-        private static InstanceInfo[] ReadInstanceInfo(XContainer xml)
+        private static InstanceInfo[] ReadInstanceInfo(string instLine)
         {
-            string[] instanceStrings = xml.Element("instances").Value.Split('|');
+			var instanceStrings = instLine.Split('|');
 	        var instanceCount = instanceStrings.Length;
             var instances = new InstanceInfo[instanceCount];
 
 	        for (int i = 0; i < instanceStrings.Length; i++)
 	        {
-		        var data = instanceStrings[i];
-		        if (data.Length == 0)
+				var instData = instanceStrings[i];
+		        if (instData.Length == 0)
 			        continue;
 
-		        var pair = data.Split(',');
+		        var pair = instData.Split(',');
 		        var resourceNum = Convert.ToInt32(pair[0]);
 		        var instanceName = pair[1];
 		        instances[i] = new InstanceInfo
@@ -45,50 +47,50 @@ namespace Flunity.Internal
 	        return instances;
         }
 
-        private static FrameData[] ReadFrames(XContainer xml, int instanceCount)
+        private static FrameData[] ReadFrames(string[] lines, int instanceCount)
         {
-            var elements = xml.Element("frames").Elements().ToArray();
-            var framesCount = elements.Length;
+			var framesCount = lines.Length - FRAME_LINE;
             var frames = new FrameData[framesCount];
 
             for (int i = 0; i < framesCount; i++)
             {
                 var prevFrame = (i > 0) ? frames[i - 1] : null;
-                frames[i] = ReadFrame(elements[i], prevFrame, instanceCount);
+				frames[i] = ReadFrame(lines[FRAME_LINE + i], prevFrame, instanceCount);
             }
 
             return frames;
         }
 
-        private static FrameData ReadFrame(XElement element, FrameData prevFrame, int totalInstanceCount)
+		private static FrameData ReadFrame(string frameLine, FrameData prevFrame, int totalInstanceCount)
         {
             var frame = new FrameData();
             frame.existingInstancesBits = new BitArray(totalInstanceCount, false);
-            var labelsAttr = element.Attribute("labels");
-			frame.labels = labelsAttr != null ? labelsAttr.Value.Split(',') : new string[] { };
 
-            var frameData = element.Value;
+			var parts = frameLine.Split('|');
+			var labels = parts[0];
 
-            if (frameData.Length == 0)
+			frame.labels = string.IsNullOrEmpty(labels) ? new string[] { } : labels.Split(',');
+
+			if (parts[1].Length == 0)
             {
                 frame.instances = new InstanceData[] { };
-                return frame;
             }
+			else
+			{
+				var instanceCount = parts.Length - 1;
+				frame.instances = new InstanceData[instanceCount];
 
-            var instanceStrings = element.Value.Split('|');
-            var instanceCount = instanceStrings.Length;
-            frame.instances = new InstanceData[instanceCount];
+				var prevFrameInstances = prevFrame != null
+					? prevFrame.instances.ToDictionary(it => it.id, it => it)
+					: new Dictionary<int, InstanceData>();
 
-			var prevFrameInstances = prevFrame != null
-                                         ? prevFrame.instances.ToDictionary(it => it.id, it => it)
-                                         : new Dictionary<int, InstanceData>();
-
-            for (int i = 0; i < instanceCount; i++)
-            {
-                var instance = ReadInstance(instanceStrings[i], prevFrameInstances);
-                frame.instances[i] = instance;
-                frame.existingInstancesBits[instance.id] = true;
-            }
+				for (int i = 0; i < instanceCount; i++)
+				{
+					var instance = ReadInstance(parts[i + 1], prevFrameInstances);
+					frame.instances[i] = instance;
+					frame.existingInstancesBits[instance.id] = true;
+				}
+			}
 
             return frame;
         }

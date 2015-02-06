@@ -93,11 +93,6 @@ namespace Flunity
 			return GetResource<IResource>(resourcePath);
 		}
 
-		internal static string GetFullPath(string path)
-		{
-			return path;
-		}
-
 		/// <summary>
 		/// Searches for resource in loaded bundles. Returns null if not found.
 		/// </summary>

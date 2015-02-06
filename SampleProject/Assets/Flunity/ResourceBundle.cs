@@ -153,17 +153,15 @@ namespace Flunity
 
 		internal T LoadContent<T>(string path) where T: UnityEngine.Object
 		{
-			var rootPath = FlashResources.GetFullPath(path);
-
 			if (FlashResources.logLevel <= LogLevel.DEBUG)
-				Debug.Log("Loading: " + rootPath);
+				Debug.Log("Loading: " + path);
 
-			var content = UnityEngine.Resources.Load<T>(rootPath);
+			var content = UnityEngine.Resources.Load<T>(path);
 
 			if (content == null)
 			{
 				if (FlashResources.logLevel <= LogLevel.DEBUG)
-					Debug.Log("Not found: " + rootPath);
+					Debug.Log("Not found: " + path);
 
 			}
 
