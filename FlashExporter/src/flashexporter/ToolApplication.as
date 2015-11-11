@@ -76,10 +76,10 @@ package flashexporter
 			FileUtil.writeBinary(file, PNGEncoder.encode(bitmap));
 		}
 
-		public function writeBundleDescription(file:File, content:XML):void
+		public function writeBundleDescription(file:File, content:String):void
 		{
-			file = FileUtil.swapExt(file, "xml");
-			FileUtil.writeXML(file, content);
+			file = FileUtil.swapExt(file, "txt");
+			FileUtil.writeText(file, content);
 		}
 
 		public function showStats():void

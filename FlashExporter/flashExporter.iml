@@ -15,7 +15,7 @@
           <sdk name="flex_sdk_4.6" />
         </dependencies>
         <compiler-options>
-          <option name="resourceFilesMode" value="ResourcePatterns" />
+          <option name="resourceFilesMode" value="None" />
         </compiler-options>
         <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/air-descriptor.xml" package-file-name="FlashExporter" />
         <packaging-android />
@@ -55,4 +55,3 @@
     </orderEntry>
   </component>
 </module>
-

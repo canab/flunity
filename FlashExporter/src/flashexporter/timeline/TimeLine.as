@@ -1,5 +1,7 @@
 package flashexporter.timeline
 {
+	import actionlib.common.query.from;
+
 	import flashexporter.data.Symbol;
 
 	public class TimeLine
@@ -24,7 +26,7 @@ package flashexporter.timeline
 			instances.push(symbol);
 		}
 
-		public function toXML():XML
+		public function serialize():String
 		{
 			var instanceData:Array = [];
 			for each (var instance:Symbol in instances)
@@ -33,18 +35,11 @@ package flashexporter.timeline
 				instanceData.push(dataItems.join(","));
 			}
 
-			var framesNode:XML = <frames/>;
-			for each (var frame:TimeLineFrame in frames)
-			{
-				framesNode.appendChild(frame.toXML());
-			}
+			var resourceNode:String = resources.join(",");
+			var instanceNode:String = instanceData.join("|");
+			var frameNodes:Array = from(frames).select(TimeLineFrame.serialize);
 
-			var xml:XML = <timeline/>;
-			xml.resources = resources.join(",");
-			xml.instances = instanceData.join("|");
-			xml.appendChild(framesNode);
-
-			return xml;
+			return [resourceNode, instanceNode].concat(frameNodes).join("\n");
 		}
 	}
 }

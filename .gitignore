@@ -43,7 +43,7 @@ Thumbs.db
 # ============ #
 # IntellijIdea #
 # ============ #
-.idea
+**/.idea/workspace.xml
 
 # ============ #
 # Eclipse #

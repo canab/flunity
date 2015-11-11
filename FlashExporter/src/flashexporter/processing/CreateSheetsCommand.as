@@ -4,8 +4,6 @@ package flashexporter.processing
 	import actionlib.common.geom.IntSize;
 	import actionlib.common.utils.StringUtil;
 
-	import by.blooddy.crypto.image.PNGEncoder;
-
 	import flash.display.BitmapData;
 	import flash.filesystem.File;
 	import flash.geom.Rectangle;
@@ -15,8 +13,6 @@ package flashexporter.processing
 	import flashexporter.data.Swf;
 	import flashexporter.data.Symbol;
 	import flashexporter.spritesheet.*;
-
-	import shared.air.utils.FileUtil;
 
 	public class CreateSheetsCommand extends ProcessingCommandBase
 	{
@@ -153,7 +149,7 @@ package flashexporter.processing
 				var high:Symbol = findSymbol(highSymbols, low.id + "$hd");
 				if (high)
 				{
-					high.description = low.description.copy();
+					high.description = low.description;
 					result.push(high);
 				}
 				else
@@ -175,7 +171,7 @@ package flashexporter.processing
 			return null;
 		}
 
-		private function writePack(name:String, texture:BitmapData, description:XML):void
+		private function writePack(name:String, texture:BitmapData, description:String):void
 		{
 			var textureFile:File = app.outputDir
 					.resolvePath(_swf.bundleName)

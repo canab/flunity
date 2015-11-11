@@ -128,38 +128,45 @@ namespace Flunity
 			base.Load();
 
 			_charmap = ReadCharMap();
+
+			const string FONT_TAG = "font:";
+			var format = description.First(it => it.StartsWith (FONT_TAG, StringComparison.Ordinal));
+			var formatParts = format.Substring(FONT_TAG.Length).Split(',');
 			
-			var format = description.Element("format");
-			fontName = format.Attribute("fontName").Value;
-			fontSize = Convert.ToInt32(format.Attribute("fontSize").Value);
-			letterSpacing = Convert.ToInt32(format.Attribute("letterSpacing").Value);
-			rowHeight = Convert.ToInt32(format.Attribute("rowHeight").Value);
-			offset = new Vector2(
-				Convert.ToInt32(format.Attribute("offsetX").Value),
-				Convert.ToInt32(format.Attribute("offsetY").Value));
+			fontName = formatParts[0];
+			fontSize = Convert.ToInt32(formatParts[1]);
+			offset = new Vector2(Convert.ToInt32(formatParts[2]), Convert.ToInt32(formatParts[3]));
+			rowHeight = Convert.ToInt32(formatParts[4]);
+			letterSpacing = Convert.ToInt32(formatParts[5]);
 		}
 
 		private Dictionary<char, CharInfo> ReadCharMap() 
 		{
 			var result = new Dictionary<char, CharInfo>();
-			var elements = description.Elements("frame").ToArray();
-			var length = elements.Length;
 			var textureScale = isHd ? 0.5f : 1f;
+			var frameNum = 0;
 			
-			for (int i = 0; i < length; i++)
+			for (int i = 0; i < description.Length; i++)
 			{
-				var element = elements[i];
+				var line = description[i];
+				if (!line.StartsWith(FRAME_TAG, StringComparison.Ordinal))
+					continue;
+
+				var parts = line.Substring(FRAME_TAG.Length).Split(',');
+
 				var charInfo = new CharInfo
 				{
-					frameNum = i,
-					symbol = element.Attribute("s").Value[0],
-					symbolWidth = Convert.ToInt32(element.Attribute("sw").Value) * textureScale,
+					frameNum = frameNum,
+					symbol = line[line.Length - 1],
+					symbolWidth = Convert.ToInt32(parts[6]) * textureScale,
 					offset = new Vector2
 					{
-						x = Convert.ToInt32(element.Attribute("ox").Value) * textureScale,
-						y = Convert.ToInt32(element.Attribute("oy").Value) * textureScale,
+						x = Convert.ToInt32(parts[7]) * textureScale,
+						y = Convert.ToInt32(parts[8]) * textureScale,
 					}
 				};
+
+				frameNum += 1;
 
 				result[charInfo.symbol] = charInfo;
 			}

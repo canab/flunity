@@ -49,7 +49,7 @@ namespace Flunity
 		{
 			get
 			{
-				#if UNITY_EDITOR || UNITY_STANDALONE
+				#if (UNITY_EDITOR || UNITY_STANDALONE) && !UNITY_WEBPLAYER
 				return isReloadingEnabled;
 				#else
 				return false;
@@ -91,11 +91,6 @@ namespace Flunity
 		public static IResource GetResource(string resourcePath)
 		{
 			return GetResource<IResource>(resourcePath);
-		}
-
-		internal static string GetFullPath(string path)
-		{
-			return path;
 		}
 
 		/// <summary>

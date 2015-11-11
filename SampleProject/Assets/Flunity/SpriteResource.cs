@@ -1,11 +1,9 @@
 using System;
-using System.Linq;
-using System.Xml.Linq;
 using Flunity.Utils;
 using UnityEngine;
 using Flunity;
 using Flunity.Internal;
-using Flunity.Common;
+using System.Collections.Generic;
 
 namespace Flunity
 {
@@ -14,7 +12,10 @@ namespace Flunity
 	/// </summary>
 	public class SpriteResource : ResourceBase, IDisplayResource
 	{
-		internal XElement description;
+		internal const string HD_TAG = "hd:";
+		internal const string FRAME_TAG = "f:";
+
+		internal string[] description;
 
 		private SheetFrame[] _frames;
 		private bool _isHd;
@@ -40,46 +41,44 @@ namespace Flunity
 		public override void Load()
 		{
 			if (description == null)
-			{
 				description = GetDescription();
-
-				_isHd = description != null
-					&& description.Attribute("hd") != null
-					&& description.Attribute("hd").Value == "true";
-			}
 
 			frames = GetFrames();
 		}
 
-		private XElement GetDescription()
+		private string[] GetDescription()
 		{
 			var contentBundle = bundle as ContentBundle;
 			if (contentBundle != null)
 				return contentBundle.GetDescription(path);
 			
-			var filePath = FlashResources.GetFullPath(path + ".xml");
-			var hdFilePath = FlashResources.GetFullPath(path + "$hd.xml");
+			var filePath = path + ".txt";
+			var hdFilePath = path + "$hd.txt";
 
 			if (FlashResources.useHighDefTextures && ResourceHelper.AssetExists(hdFilePath))
-				return ResourceHelper.ReadXml(hdFilePath).Root;
+				return ResourceHelper.ReadText(hdFilePath).Split('\n');
 
 			if (ResourceHelper.AssetExists(filePath))
-				return ResourceHelper.ReadXml(filePath).Root;
+				return ResourceHelper.ReadText(filePath).Split('\n');
 
 			return null;
 		}
 
 		private TextureInfo GetTexture(string texturePath)
 		{
+			var result = new TextureInfo();
+
 			var contentBundle = bundle as ContentBundle;
 			if (contentBundle != null)
-				return contentBundle.GetTexture(texturePath);
-			
-			var result = new TextureInfo();
-			var hdPath = texturePath + "$hd";
-			var hdFullPath = FlashResources.GetFullPath(hdPath);
+			{
+				result.texture = contentBundle.texture;
+				result.scale = _isHd ? 0.5f : 1f;
+				return result;
+			}
 
-			if (FlashResources.useHighDefTextures && ResourceHelper.AssetExists(hdFullPath))
+			var hdPath = texturePath + "$hd";
+
+			if (FlashResources.useHighDefTextures && ResourceHelper.AssetExists(hdPath))
 			{
 				result.texture = bundle.LoadContent<Texture2D>(hdPath);
 				result.scale = 0.5f;
@@ -104,32 +103,40 @@ namespace Flunity
 				return new SheetFrame(textureInfo.texture, Vector2.zero, textureInfo.scale).AsArray();
 			}
 
-			var frameNodes = description.Elements("frame").ToArray();
-			var sheetFrames = new SheetFrame[frameNodes.Length];
-			var frameIndex = 0;
+			var sheetFrames = new List<SheetFrame>(description.Length);
 
-			foreach (var node in frameNodes)
+			for (var i = 1; i < description.Length; i++)
 			{
-				var sheet = node.Attribute("sheet");
-				var texturePath = sheet != null ? sheet.Value : path;
-				var textureInfo = GetTexture(texturePath);
-				
-				var frame = new SheetFrame(
-					textureInfo.texture,
-					new Rect(
-						Convert.ToInt32(node.Attribute("x").Value),
-						Convert.ToInt32(node.Attribute("y").Value),
-						Convert.ToInt32(node.Attribute("w").Value),
-						Convert.ToInt32(node.Attribute("h").Value)),
-					new Vector2(
-						Convert.ToInt32(node.Attribute("ax").Value),
-						Convert.ToInt32(node.Attribute("ay").Value)),
-					textureInfo.scale);
+				var line = description[i];
 
-				sheetFrames[frameIndex++] = frame;
+				if (line == HD_TAG)
+				{
+					_isHd = true;
+					continue;
+				}
+
+				if (line.StartsWith(FRAME_TAG, StringComparison.Ordinal))
+				{
+					var textureInfo = GetTexture(path);
+					var parts = line.Substring(FRAME_TAG.Length).Split(",");
+
+					var frame = new SheetFrame(
+						textureInfo.texture,
+						new Rect(
+							Convert.ToInt32(parts[0]),
+							Convert.ToInt32(parts[1]),
+							Convert.ToInt32(parts[2]),
+							Convert.ToInt32(parts[3])),
+						new Vector2(
+							Convert.ToInt32(parts[4]),
+							Convert.ToInt32(parts[5])),
+						textureInfo.scale);
+
+					sheetFrames.Add(frame);
+				}
 			}
 
-			return sheetFrames;
+			return sheetFrames.ToArray();
 		}
 		
 		public override void Unload()

@@ -18,15 +18,17 @@ package flashexporter.timeline
 			return null;
 		}
 
-		internal function toXML():XML
+		internal function serialize():String
 		{
-			var data:Array = from(instances).select(InstanceParams.serialize);
-			var xml:XML = <f>{data.join("|")}</f>;
+			var labelsNode:String = labels.join(",");
+			var instanceNodes:Array = from(instances).select(InstanceParams.serialize);
 
-			if (labels.length > 0)
-				xml.@labels = labels.join(",");
+			return [labelsNode] + "|" + instanceNodes.join("|");
+		}
 
-			return xml;
+		public static function serialize(value:TimeLineFrame):String
+		{
+			return value.serialize();
 		}
 	}
 }

@@ -110,22 +110,21 @@ package flashexporter.font
 			_symbol.isProcessed = true;
 		}
 
-		private function getDescription():XML
+		private function getDescription():String
 		{
 			var charBounds:Rectangle = _field.getCharBoundaries(0);
 			var textFormat:TextFormat = _field.getTextFormat(0);
 
-			var format:XML = <format/>;
-			format.@fontName = ToolApplication.correctFontName(textFormat.font);
-			format.@fontSize = textFormat.size ? int(textFormat.size) : 12;
-			format.@offsetX = int(charBounds.x);
-			format.@offsetY = int(charBounds.y);
-			format.@rowHeight = int(charBounds.height);
-			format.@letterSpacing = int(textFormat.letterSpacing);
+			var fontName:String = ToolApplication.correctFontName(textFormat.font);
+			var fontSize:int = (textFormat.size ? int(textFormat.size) : 12);
+			var offsetX:int = int(charBounds.x);
+			var offsetY:int = int(charBounds.y);
+			var rowHeight:int = int(charBounds.height);
+			var letterSpacing:int = int(textFormat.letterSpacing);
 
-			var description:XML = <font/>;
-			description.appendChild(format);
-			return description;
+			var parts:Array = [fontName, fontSize, offsetX, offsetY, rowHeight, letterSpacing];
+
+			return "font:" + parts.join(",");
 		}
 
 		private function renderChar(ch:String):FontFrame
