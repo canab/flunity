@@ -1,1 +1,1 @@
-ZXPSignCmd -sign com.nravo.flashpanel bin/LinkageHelper.zxp cert.p12 123
+ZXPSignCmd -sign com.nravo.flashpanel LinkageHelper.zxp cert.p12 123
