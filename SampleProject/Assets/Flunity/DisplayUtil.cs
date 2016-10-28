@@ -159,6 +159,20 @@ namespace Flunity
 		}
 
 		/// <summary>
+		/// Stops animation on all target's children;
+		/// </summary>
+		public static void StopAllChildren(this DisplayContainer target)
+		{
+			foreach (var displayObject in target)
+			{
+				if (displayObject.totalFrames > 1 || displayObject is MovieClip)
+				{
+					displayObject.Stop();
+				}
+			}
+		}
+
+		/// <summary>
 		/// Makes object to be most top in its container.
 		/// </summary>
 		public static void BringToTop(this DisplayObject target)
