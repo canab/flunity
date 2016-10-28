@@ -35,11 +35,7 @@ namespace Flunity
 		internal void DispatchFrameLabelEntered(DisplayObject target, string label)
 		{
 			if (FrameLabelEntered != null)
-			{
-				UnityEngine.Debug.Log(label);
 				FrameLabelEntered.Invoke(target, label);
-			}
-				
 		}
 
 		#endregion

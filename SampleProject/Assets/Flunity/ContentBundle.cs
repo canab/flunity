@@ -60,8 +60,9 @@ namespace Flunity
 			if (_texture != null)
 			{
 				UnityEngine.Object.DestroyImmediate(_texture);
-				//UnityEngine.Resources.UnloadAsset(_texture);
 				_texture = null;
+//				Resources.UnloadUnusedAssets();
+//				GC.Collect();
 			}
 
 			#if (UNITY_EDITOR || UNITY_STANDALONE) && !UNITY_WEBPLAYER

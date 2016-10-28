@@ -277,5 +277,16 @@ namespace Flunity.Internal
 			Array.Copy(vertices, 0, _indices, _vertexNum, vertices.Length);
 			_vertexNum += vertices.Length;
 		}
+
+		public Mesh Mesh
+		{
+			get { return _mesh; }
+		}
+
+		public Material Material
+		{
+			get { return _material; }
+		}
+
 	}
 }
