@@ -24,6 +24,7 @@ namespace Flunity.Internal
 			_drawOptions.Reset();
 
 			var drawBatch = _stage.sceneBatch;
+			drawBatch.Begin(_stage.GetGlobalMatrix());
 
 			while (_currentItem != null)
 			{
@@ -68,7 +69,7 @@ namespace Flunity.Internal
 				}
 			}
 
-			drawBatch.Flush();
+			drawBatch.End();
 		}
 
 		private void ApplyDrawOptions()

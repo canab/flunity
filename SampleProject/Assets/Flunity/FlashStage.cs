@@ -131,8 +131,8 @@ namespace Flunity
 			root = new DisplayRoot(this);
 			input = new InputController(this);
 			touchController = new TouchController(this);
-			sceneBatch = new DrawBatch(this, null, 0);
-			debugBatch = new DrawBatch(this, null, 1);
+			sceneBatch = new DrawBatch();
+			debugBatch = new DrawBatch();
 
 			if (shader == null)
 				shader = Shader.Find("Flunity/Default");
@@ -225,11 +225,11 @@ namespace Flunity
 
 			isDrawPhase = true;
 
+			debugBatch.Begin(GetGlobalMatrix());
 			root.Draw();
-
 			drawEvent.Dispatch();
-
-			debugBatch.Flush();
+			debugBatch.renderQueue = sceneBatch.renderQueue + 1;
+			debugBatch.End();
 
 			isDrawPhase = false;
 		}
