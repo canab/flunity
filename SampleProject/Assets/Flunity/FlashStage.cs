@@ -171,22 +171,8 @@ namespace Flunity
 				root.RemoveChildren();
 				root = null;
 
-				DestroyDrawBatch(debugBatch);
-				DestroyDrawBatch(sceneBatch);
-			}
-		}
-
-		private void DestroyDrawBatch(DrawBatch batch)
-		{
-			if (batch.Material != null)
-			{
-				DestroyImmediate(batch.Material);
-			}
-
-			if (batch.Mesh != null)
-			{
-				batch.Mesh.Clear();
-				DestroyImmediate(batch.Mesh);
+				debugBatch.Destroy();
+				sceneBatch.Destroy();
 			}
 		}
 

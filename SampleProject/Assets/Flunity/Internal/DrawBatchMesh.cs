@@ -28,6 +28,18 @@ namespace Flunity.Internal
 			Reset();
 		}
 
+		public void Destroy ()
+		{
+			if (_material != null)
+				UnityEngine.Object.DestroyImmediate(_material);
+
+			if (_mesh != null)
+			{
+				_mesh.Clear();
+				UnityEngine.Object.DestroyImmediate(_mesh);
+			}
+		}
+
 		#region DRAW
 
 		public void DrawQuad(ref SpriteQuad quad)

@@ -104,5 +104,13 @@ namespace Flunity.Internal
 			_currentMesh.Flush(_currentTexture, shader, _matrix, layer, renderQueue);
 			_drawOptions.CopyFrom(drawOptions);
 		}
+
+		public void Destroy()
+		{
+			foreach (var mesh in _meshes)
+			{
+				mesh.Destroy();
+			}
+		}
 	}
 }
