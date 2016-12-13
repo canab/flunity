@@ -10,11 +10,11 @@ Library/
 # Temp Files      #
 # =============== #
 
-/Distrib*
+#/Distrib*
 /Docs/html
 RECOVER_*.fla
 .ant_targets
- 
+
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
 # ===================================== #
@@ -28,7 +28,7 @@ ExportedObj/
 *.user
 *.unityproj
 *.booproj
- 
+
 # ============ #
 # OS generated #
 # ============ #
