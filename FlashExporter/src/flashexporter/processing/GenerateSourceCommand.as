@@ -46,7 +46,7 @@ package flashexporter.processing
 
 			var bundleSource:String = String(new csharp_bundle())
 					.replace("#using", _using.join("\n"))
-					.replace("#namespace", "FlashBundles")
+					.replace("#namespace", "Flash_" + _swf.bundleName)
 					.replace(/#className/g, _swf.bundleName)
 					.replace("#resources", resources.join("\n"))
 					.replace("#classes", classes.join("\n\n"));

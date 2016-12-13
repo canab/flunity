@@ -1,7 +1,7 @@
 <project name="build" basedir="." default="build-and-pack">
 
 	<property environment="env"/>
-	
+
 	<fail message="set environment variable FLEX_HOME=/path/to/flex_sdk_4.6" unless="env.FLEX_HOME"></fail>
 
 	<condition property="exe" value=".exe" else="">
@@ -18,8 +18,8 @@
 	<property name="amxmlc" value="${flex.sdk}/bin/amxmlc${exe}"/>
 	<property name="build.debug" value="true"/>
 	<property name="dist.dir" value="../../Distrib"/>
-	<property name="cert.file" location="debug-cert.pfx"/>
-	<property name="cert.pasword" value="123"/>
+	<property name="cert.file" location="cert.pfx"/>
+	<property name="cert.pass" value="123"/>
 
 	<target name="build-and-pack" depends="build, pack-air, show"/>
 
@@ -36,7 +36,7 @@
 			<arg line="../bin"/>
 		</exec>
 	</target>
-	
+
 	<target name="run-debug">
 		<exec executable="${adl}" failonerror="true">
 			<arg line="../src/air-descriptor.xml"/>
@@ -79,7 +79,7 @@
 			<arg line="-package"/>
 			<arg line="-storetype pkcs12"/>
 			<arg line="-keystore ${cert.file}"/>
-			<arg line="-storepass ${cert.pasword}"/>
+			<arg line="-storepass ${cert.pass}"/>
 			<arg line="-target air"/>
 			<arg line="${air.name}"/>
 			<arg line="air-descriptor.xml"/>
@@ -88,5 +88,5 @@
 		<delete dir="${dist.dir}" includes="FlashExporter-*.air"/>
 		<move file="../bin/${air.name}" todir="${dist.dir}"/>
 	</target>
-	
+
 </project>
